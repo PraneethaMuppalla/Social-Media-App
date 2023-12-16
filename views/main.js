@@ -8,7 +8,7 @@ let descriptionEl = document.getElementById("description");
 const postRowEl = document.getElementById("postsRow");
 formEl.addEventListener("submit", submitPosts);
 
-async function postComment(e, id, comment, commentsDivEl) {
+async function postComment(e, id, comment, commentsDivEl, inputEl) {
   try {
     e.preventDefault();
     const newComment = {
@@ -16,6 +16,7 @@ async function postComment(e, id, comment, commentsDivEl) {
       description: comment,
     };
     const response = await axiosInstance.post("/post-comment", newComment);
+    inputEl.value = "";
     renderEachComment(response.data, commentsDivEl);
   } catch (err) {
     console.error(err);
@@ -23,8 +24,13 @@ async function postComment(e, id, comment, commentsDivEl) {
 }
 
 function renderEachComment(each, divEl) {
+  let nameEl = document.createElement("h6");
+  nameEl.textContent = "Anonymous user";
+  nameEl.className = "m-1 p-0 fst-italic text-warning";
   let paraEl = document.createElement("p");
   paraEl.textContent = each.description;
+  paraEl.className = "text-center p-0 m-1";
+  divEl.appendChild(nameEl);
   divEl.appendChild(paraEl);
 }
 
@@ -35,7 +41,10 @@ async function addComment(id) {
     const inputEl = document.createElement("input");
     const buttonEl = document.createElement("button");
     inputEl.setAttribute("required", true);
+    inputEl.classList.add("input");
     buttonEl.textContent = "Post";
+    buttonEl.classList.add("btn");
+    buttonEl.classList.add("btn-info");
     buttonEl.type = "submit";
 
     if (
@@ -56,7 +65,7 @@ async function addComment(id) {
     }
 
     commentsDivEl.addEventListener("submit", (e) => {
-      postComment(e, id, inputEl.value, commentsDivEl);
+      postComment(e, id, inputEl.value, commentsDivEl, inputEl);
     });
   } catch (err) {
     console.error(err);
@@ -65,13 +74,15 @@ async function addComment(id) {
 
 function renderEachPost(each) {
   let eachPost = `
-  <div class="image col-11 col-lg-5 col-md-8 mb-3">
-  <img src=${each.imageUrl} alt="${each.id}">
-  <p>User- ${each.description}</p>
-  <button onclick="addComment(${each.id})" class="btn">
+  <div class="p-3 image-container m-1 d-flex flex-column align-items-center justify-content-center rounded  mr-3 ">
+  <img class="image" src=${each.imageUrl} alt="${each.id}">
+  <h6 class=" text-center mt-2 span-element ">User- ${each.description}</h6>
+  <button onclick="addComment(${each.id})" class="button ">
   <img alt="comment-icon" class="comment-image" src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjth8Df-b8WSjCOvnaVthZQxn5oEl_RFD04ZJAdBgCjkc_TI13N7OV6UJe059iY8zemQE&usqp=CAU" />
+  <span  >Comments</span>
   </button>
-  <form id="commentsDiv${each.id}" >
+
+  <form id="commentsDiv${each.id}" class="mt-3">
   </form>
 </div>  
   `;

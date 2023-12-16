@@ -12,13 +12,20 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="bg-danger-subtle">
-    <div class="container my-5">
+  <body>
+    <header class="text-center bg-success p-2 text-white mb-2">
+      <div class="container">
+        <h2>Social Media Website</h2>
+      </div>
+    </header>
+    <div class="container my-2">
       <div class="row justify-content-center">
         <div class="col-12 text-center mb-2">
           <h3>Create a Post</h3>
         </div>
-        <div class="col-11 col-lg-5 col-md-8 p-md-4 p-3 rounded bg-white">
+        <div
+          class="col-11 col-lg-5 col-md-8 p-md-4 p-3 border rounded bg-white border-success border-2"
+        >
           <form id="form">
             <div class="mb-3">
               <label for="imageUrl" class="form-label fw-bold">Post Link</label>
@@ -39,8 +46,9 @@
           </form>
         </div>
       </div>
-      <div class="row justify-content-center mt-4" id="postsRow">
-        <div class="col-12 text-center mb-2">
+      <hr class="border border-dark border-1" />
+      <div class="row justify-content-center mt-1 d-flex" id="postsRow">
+        <div class="text-center mb-2">
           <h3>Posts</h3>
         </div>
       </div>

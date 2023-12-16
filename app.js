@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(postRoutes);
 
 Post.hasMany(Comment);
-Comment.belongsTo(Post);
+Comment.belongsTo(Post, { constraints: true, onDelete: "CASCADE" });
 
 sequelize
   .sync()
